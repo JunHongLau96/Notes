@@ -8,6 +8,8 @@ import {Dropdown} from 'react-native-element-dropdown';
 import Color from '../utils/Color';
 import {useNavigation} from '@react-navigation/native';
 import {useAppContext} from '../contexts/context';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../navigation/navigator';
 
 const CreateScreen: React.FC = () => {
   //initialise data
@@ -18,13 +20,14 @@ const CreateScreen: React.FC = () => {
     {index: 3, label: 'Health and wellness', value: 'Health and wellness'},
   ];
   const [text, onChangeText] = useState<string>('');
-  const navigation = useNavigation();
   const {add, changeIndex} = useAppContext();
+  type CreateScreenNavigationProp = StackNavigationProp<RootStackParamList>;
+  const navigation = useNavigation<CreateScreenNavigationProp>(); // Correctly typed navigation hook
 
   const handleAdd = () => {
     if (category && text) {
       add(category, text);
-      navigation.goBack();
+      navigation.navigate('Home');
       changeIndex(0); //change index to settings screen index
     }
   };
